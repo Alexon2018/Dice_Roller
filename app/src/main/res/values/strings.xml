@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Dice Roller</string>
+    <string name="roll1">Run Left</string>
+    <string name="roll2">Run Right</string>
+    <string name="roll3">Run ALL</string>
+</resources>
