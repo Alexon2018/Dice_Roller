@@ -1,6 +1,5 @@
 package com.example.diceroller
 
-import com.example.diceroller.R
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
@@ -64,12 +63,10 @@ class MainActivity : AppCompatActivity() {
         }
         when(position){
             "left"-> {
-
                 diceImage1.setImageResource(drawableResources)
                 diceImage1.contentDescription=dice.roll().toString()
             }
             "right"-> {
-
                 diceImage2.setImageResource(drawableResources)
                 diceImage2.contentDescription=dice.roll().toString()
             }
