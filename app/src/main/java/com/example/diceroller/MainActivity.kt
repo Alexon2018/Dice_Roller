@@ -1,11 +1,13 @@
 package com.example.diceroller
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.diceroller.MainActivity.RollType.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var diceImage1 : ImageView
     private lateinit var diceImage2 : ImageView
@@ -20,40 +22,43 @@ class MainActivity : AppCompatActivity() {
         diceImage1 = findViewById(R.id.iView1)
         diceImage2 = findViewById(R.id.iView2)
 
+        rollDice(ALL)
 
-        rollDice("all")
+        rolledButton1.setOnClickListener(this)
+        rolledButton2.setOnClickListener(this)
+        rolledButton3.setOnClickListener(this)
 
-        rolledButton1.setOnClickListener {
-            rollDice("left")
-        }
-        rolledButton2.setOnClickListener {
-            rollDice("right")
-        }
-        rolledButton3.setOnClickListener {
-            rollDice("all")
-        }
+//        rolledButton1.setOnClickListener {
+//            rollDice(LEFT)
+//        }
+//        rolledButton2.setOnClickListener {
+//            rollDice(RIGHT)
+//        }
+//        rolledButton3.setOnClickListener {
+//            rollDice(ALL)
+//        }
 
     }
 
     /////////////////////////////////////////////////////////////////////
 
-    private fun rollDice(providedParameter : String){
+    enum class RollType {LEFT, RIGHT, ALL}
+
+    private fun rollDice(providedParameter : RollType){
         when (providedParameter){
-            "left"-> random("left")
-            "right"-> random("right")
-            else->{
-                random("left")
-                random("right")
-            }
+            LEFT -> random("left")
+            RIGHT -> random("right")
+            ALL -> random("right")
         }
     }
 
-    /////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
 
     private fun random(position : String){
 
         val dice = Dice(6)
-        val drawableResources = when (dice.roll()){
+        val varRoll = dice.roll()
+        val drawableResources = when (varRoll){
             1-> R.drawable.dice_1
             2-> R.drawable.dice_2
             3-> R.drawable.dice_3
@@ -63,17 +68,25 @@ class MainActivity : AppCompatActivity() {
         }
 
         when(position){
-            "left"-> setImageAndDescription(diceImage1, drawableResources, dice.roll().toString())
-            "right"->setImageAndDescription(diceImage2, drawableResources, dice.roll().toString())
+            "left"-> setImageAndDescription(diceImage1, drawableResources, description = varRoll.toString())
+            "right"->setImageAndDescription(diceImage2, drawableResources, description = varRoll.toString())
         }
-        
+
     }
 
-    /////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
 
     private fun setImageAndDescription(diceImage: ImageView, drawableResources: Int, description : String) {
         diceImage.setImageResource(drawableResources)
         diceImage.contentDescription=description
+    }
+
+    override fun onClick(p0: View) {
+        when (p0.id){
+            R.id.randomB1 -> rollDice(LEFT)
+            R.id.randomB2 -> rollDice(RIGHT)
+            R.id.randomAll -> rollDice(ALL)
+        }
     }
 
 }
