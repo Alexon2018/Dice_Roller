@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    /////////////////////////////////////////////////////////////////////s
+    /////////////////////////////////////////////////////////////////////
 
     private fun random(position : String){
 
@@ -61,16 +61,19 @@ class MainActivity : AppCompatActivity() {
             5-> R.drawable.dice_5
             else-> R.drawable.dice_6
         }
+
         when(position){
-            "left"-> {
-                diceImage1.setImageResource(drawableResources)
-                diceImage1.contentDescription=dice.roll().toString()
-            }
-            "right"-> {
-                diceImage2.setImageResource(drawableResources)
-                diceImage2.contentDescription=dice.roll().toString()
-            }
+            "left"-> setImageAndDescription(diceImage1, drawableResources, dice.roll().toString())
+            "right"->setImageAndDescription(diceImage2, drawableResources, dice.roll().toString())
         }
+        
+    }
+
+    /////////////////////////////////////////////////////////////////////
+
+    private fun setImageAndDescription(diceImage: ImageView, drawableResources: Int, description : String) {
+        diceImage.setImageResource(drawableResources)
+        diceImage.contentDescription=description
     }
 
 }
